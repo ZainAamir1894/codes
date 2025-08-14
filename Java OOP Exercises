@@ -1,0 +1,549 @@
+//OOP Beginning (creating multiple/single objects in a custom class, printing methods )
+
+/* class Employee {         //custom class
+    int id;
+    String name;
+    int salary;
+    public void printDetails(){
+        System.out.println("My name is: " + name);                //we can make a custom method instead of writing
+        System.out.println("And my employee ID is: " + id);       //System print ln multiple times and then
+          System.out.println("My salary is: " + salary); //call the myDetails method to print in main class
+
+    }
+    public int getSalary(){
+        return salary;
+    }
+}
+  //main class
+  public class Main {
+      public static void main(String[] args) {
+          Employee employee = new Employee();//instantiating an object into our class
+          Employee employee1 = new Employee();
+          //Setting attributes for employee
+          employee.id = 40040;         //when you call zain.printDetails(), the fields zain.id and zain.name still hold their default values:
+          employee.name = "zain";     //so u need to assign the values directly to the fields not just id = xyz
+          employee.salary = 34630;
+
+          //setting attributes for employee1
+          employee1.name = "unaiza";
+          employee1.id = 50050;
+          employee1.salary = 30000;
+
+          employee.printDetails();
+          employee1.printDetails();
+          int salary = employee1.getSalary();
+
+          System.out.println(salary);
+
+          //printing attributes manually
+          // System.out.println(zain.id);
+          //System.out.println(zain.name);
+      }
+}*/
+
+//----------------------------------------------------------------------------------------------------
+//create a class Employee with methods: getSalary, getName, setName,
+/*class Employee{
+    int salary;
+    String name;
+
+    public void printDetails(){
+        System.out.println("Name of employee:" + name);
+        System.out.println("Monthly wages of " + name + ":" + salary);
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Employee employee = new Employee();
+        employee.name = "Zain";
+        employee.salary = 34630;
+
+        employee.printDetails();
+        int salary = employee.getSalary();
+        String name = employee.getName();
+
+    }
+}*/
+
+//----------------------------------------------------------------------------------------------------------------------
+//Create a class cellphone with methods "ringing" and "vibrating"
+
+/*class Cellphone{
+    public void ringing(){
+    System.out.print("Ringing...");
+    }
+    public void vibrating(){
+        System.out.print("Vibrating...");
+    }
+    public void callFriend(){
+        System.out.print("Calling...");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Cellphone infinix9 = new Cellphone();   //Object defining
+        infinix9.callFriend();
+        infinix9.ringing();
+        infinix9.vibrating();
+    }
+
+}*/
+
+//---------------------------------------------------------------------------------------------------------------------
+//Create a class Square to initialize it's side, calculating area, perimeter.
+
+/*class Square{
+    int side;
+    int area;
+    int perimeter;
+    public int area(){
+        return side*side;
+    }
+    public int perimeter(){
+        return (4*side);
+    }
+
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Square sq = new Square();
+        sq.side = 4;
+        System.out.println(sq.area());        //"sq.area" and "sq.perimeter" cuz we have to define the object that
+        System.out.print(sq.perimeter());     //these are the properties of our object that we're printing
+
+    }
+}*/
+
+//--------------------------------------------------------------------------------------------------------------------
+
+//Sort the ID's of Employees using Encapsulation and Bubble Sorting
+
+/*class Employee {
+    int[] id = {230, 110, 440, 330};
+
+    public void sortId() {
+        for (int i = 0; i < id.length - 1; i++) {
+            for (int j = 0; j < id.length - i - 1; j++) {
+                if (id[j] > id[j + 1]) {
+                    int temp = id[j];
+                    id[j] = id[j + 1];
+                    id[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+
+    public void printDetails() {
+        System.out.println("IDs in ascending order: ");
+        for ( int i : id){
+            System.out.print(i + " ");
+        }
+        System.out.println();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Employee employee = new Employee();
+        employee.sortId();
+        employee.printDetails();
+    }
+}*/
+
+//--------------------------------------------------------------------------------------------------------------------
+//Sort the names of Employees using Encapsulation and Bubble Sorting
+
+/*class Employee {
+    String[] name = {"Zain", "Ali", "Mubashir"};
+
+    public void sortName() {
+        for (int i = 0; i < name.length - 1; i++) {
+            for (int j = 0; j < name.length - i - 1; j++) {
+                if (name[j].compareTo(name[j + 1] ) > 0) {
+                    String temp = name[j];
+                    name[j] = name[j + 1];
+                    name[j + 1] = temp;
+
+                }
+            }
+        }
+    }
+
+    public void printDetails() {
+        System.out.println("Names of employees in Ascending order: ");
+        for (String i : name) {
+            System.out.println(i);
+        }
+
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Employee employee = new Employee();
+        employee.sortName();
+        employee.printDetails();
+
+    }
+} */
+
+//--------------------------------------------------------------------------------------------------------------------
+//Sort both Names and IDs in ascending/alphabetical order by Encapsulation and Bubble Sorting Methods
+
+/*class Employee{
+    int[] id = {220, 110, 330};
+    String[] name = {"Zain" , "Abdullah" , "Mubashir"};
+
+    //FOR IDS
+    public void sortId(){
+
+        for (int i = 0 ; i< id.length-1; i++){
+            for (int j = 0; j< id.length-i-1 ; j++){
+                if (id[j] > id[j+1]){
+                    int temp = id[j];
+                    id[j] = id[j+1];
+                    id[j+1] = temp;
+
+                }
+            }
+        }
+
+    }
+
+    //PRINTING METHOD FOR IDS
+            public void printId() {
+                System.out.println("IDs of employees in Ascending Order: ");
+                  for(int i : id){
+                      System.out.print(i + " ");
+                  }
+                  System.out.println();
+    }
+
+    //FOR NAMES
+    public void sortNames(){
+        for (int i = 0; i< name.length-1 ; i++){
+            for(int j = 0 ; j< name.length-i-1; j++){
+                if(name[j].compareTo(name[j+1]) > 0){
+                    String tempName = name[j];
+                    name[j] = name[j+1];
+                    name[j+1] = tempName;
+                }
+            }
+        }
+
+    }
+
+    //PRINTING METHOD FOR NAME
+    public void printNames(){
+        System.out.println("Names of Employees in Alphabetical Order: ");
+             for(String i : name){
+                 System.out.print(i + " ");
+             }
+              System.out.println();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Employee employee = new Employee();
+        employee.sortId();
+        employee.printId();
+
+        employee.sortNames();
+        employee.printNames();
+    }
+} */
+
+//---------------------------------------------------------------------------------------------------------------------
+//Although we sorted our arrays with sorting techniques but an efficient way to sort with encapsulation is using Array.sort
+
+//Therefore, sorting with Array.sort function:
+/*import java.util.Arrays;
+class Employee{
+   private int[] id = {220, 110, 330};
+     private String[] name = {"Zain" , "Abdullah" , "Mubashir"};
+
+    //FOR IDS
+    public void sortId(){
+        Arrays.sort(id);
+    }
+
+    //PRINTING METHOD FOR IDS
+    public void printId() {
+        System.out.println("IDs of employees in Ascending Order: ");
+        for(int i : id){
+            System.out.print(i + " ");
+        }
+        System.out.println();
+    }
+
+    public int[] getId(){
+        return id;
+    }
+
+    //FOR NAMES
+    public void sortNames(){
+        Arrays.sort(name);
+    }
+
+    //PRINTING METHOD FOR NAME
+    public void printNames(){
+        System.out.println("Names of Employees in Alphabetical Order: ");
+        for(String i : name){
+            System.out.print(i + " ");
+        }
+        System.out.println();
+    }
+
+    public String[] getName(){
+        return name;
+    }
+}
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        Employee employee = new Employee();
+        employee.sortId();
+        employee.printId();
+
+        employee.sortNames();
+        employee.printNames();
+    }
+}*/
+
+//--------------------------------------------------------------------------------------------------------------
+
+//Find the index values of the sum of two values
+
+//import statement for HashMap
+/*import java.util.HashMap;
+
+
+//main class
+public class Main{
+
+    //public static int(){} body
+    public static int[] twoSum (int[] nums , int target){
+
+        //HashMap showing we are dealing with two Integers and an object named map
+       HashMap<Integer, Integer> map = new HashMap<>();
+
+       //iteration
+       for(int i = 0; i< nums.length; i++){
+
+           //complement is the result, this line calculates what other number we need to reach the target (nums[i])
+           int complement = target - nums[i];
+
+           //if our map contains the complement
+           if(map.containsKey(complement)){
+
+               //return int body --> returns a new array with two values, the complement and the current number
+               return new int[] {map.get(complement) , i};
+
+           }
+           //puts the indices of both values
+           map.put(nums[i] , i);
+       }
+       //if no sum is found
+       throw new IllegalArgumentException("No Sum Found");
+    }
+//main function
+    public static void main(String[] args) {
+        int[] nums = {2,7,11,15};
+        int target = 9;
+
+        //method calling and our object
+        int[] result = twoSum(nums, target);
+        System.out.println("Indices: " + result[0] + " and " + result[1] );
+    }
+
+}*/
+//----------------------------------------------------------------------------------------------------------------------
+//Create a Report Card using Encapsulation
+
+/*import java.util.Scanner;
+
+class ReportCard{
+    private String name;
+    private int rollNumber;
+    private int[] marks;
+    public final int MAX_MARKS = 500;
+
+    public void printDetails(){
+        System.out.println("Student Name: " + name);
+        System.out.println("Roll Number: " + rollNumber);
+    }
+
+    //Constructor
+    public ReportCard(){
+        this.name = "Zain";
+        this.rollNumber = 51;
+        this.marks = new int[5];
+    }
+
+    //Getters
+    public String getName(){
+        return name;
+    }
+
+    public int getRollNumber(){
+        return rollNumber;
+    }
+
+    public int[] getMarks(){
+        return marks;
+    }
+
+    //To input marks                                     //This acts as the setter
+    public void inputMarks(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter obtained marks: ");
+        for(int i = 0; i< marks.length ; i++){
+            marks[i] = input.nextInt();
+        }
+    }
+
+   //Average Calculation
+    public void calculation(){
+        int sum =0;
+        for(int mark : marks){
+            sum += mark;
+        }
+
+        double Average = (double) sum/marks.length;
+
+        if(Average <= MAX_MARKS){
+            System.out.println("Percentage: " + Average + "%");
+        } else {
+            System.out.println("Invalid Marks!");
+        } //else
+    } //calculation
+}//base class
+
+public class Main {
+    public static void main(String[] args) {
+        ReportCard reportCard = new ReportCard();
+
+        reportCard.inputMarks();
+        reportCard.printDetails();
+        reportCard.calculation();
+    }
+}*/
+
+//----------------------------------------------------------------------------------------------------------------------
+
+//Create a Library of Book Information using encapsulation and inheritance
+
+// Base class
+/*class Book {
+    private String title;
+    private String authorName;
+    private double price;
+
+    public Book(String title, String authorName, double price) {
+        this.title = title;
+        this.authorName = authorName;
+        this.price = price;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getBookInfo() {
+        return "Title: " + title + " | Author Name: " + authorName + " | Price: " + price;
+    }
+}
+
+// Ebook.java
+class Ebook extends Book {
+    private double fileSize;
+    private String format;
+
+    public Ebook(String title, String author, double price, double fileSize, String format) {
+        super(title, author, price);
+        this.fileSize = fileSize;
+        this.format = format;
+    }
+
+    public double getFileSize() {
+        return fileSize;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    @Override
+    public String getBookInfo() {
+        return super.getBookInfo() + " | File Size: " + fileSize + "MB | Format: " + format;
+    }
+}
+
+// PrintedBook.java
+class PrintedBook extends Book {
+    private double weight;
+    private int stock;
+
+    public PrintedBook(String title, String author, double price, double weight, int stock) {
+        super(title, author, price);
+        this.weight = weight;
+        this.stock = stock;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    @Override
+    public String getBookInfo() {
+        return super.getBookInfo() + " | Weight: " + weight + "kg | Stock: " + stock + " units";
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        Ebook ebook = new Ebook("Digital Fortress", "Dan Brown", 500.0, 2.5, "PDF");
+        PrintedBook printedBook = new PrintedBook("The Alchemist", "Paulo Coelho", 450, 0.8, 1000);
+
+        System.out.println("Details of Ebook:");
+        System.out.println(ebook.getBookInfo());
+
+        System.out.println("\nDetails of Printed Book:");
+        System.out.println(printedBook.getBookInfo());
+    }
+}*/
+//------------------------------------------------------------------------------------------------------------------
