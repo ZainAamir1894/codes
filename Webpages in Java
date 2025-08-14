@@ -1,0 +1,191 @@
+//Downloading a webpage
+
+/*import java.io.*;
+import java.net.URI;
+import java.net.URL;
+import java.net.MalformedURLException;
+
+public class Main {
+    public static void downloadWebPage(String webpage) {
+        try {
+            URI uri = new URI(webpage); //URI stands for Uniform Resource Identifier. It is a string of characters that uniquely identifies a resource, whether it's a webpage, an image, or any other object on the internet or a network.
+            URL url = uri.toURL();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+      //input stream converts the raw data of bits into characters, and open stream opens a connection to the url
+
+            BufferedWriter wr = new BufferedWriter(new FileWriter("webpage.html"));
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                wr.write(line);
+                wr.newLine();
+            }
+
+            br.close();
+            wr.close();
+
+            System.out.println("Webpage Downloaded Successfully!");
+        } catch (MalformedURLException | IllegalArgumentException e) {
+            System.out.println("Invalid URL!");
+        } catch (IOException e) {
+            System.out.println("Error, file not downloaded!");
+        } catch (Exception e) {
+            System.out.print("Invalid URI Syntax!");
+        }
+
+    }
+    public static void main(String[] args) {
+        String url = "https://en.wikipedia.org/wiki/Lionel_Messi#";
+
+        downloadWebPage(url); //path = Local Disk C-->Users-->Aamir-->IdeaProjects-->untitled1
+    }
+}*/
+
+//----------------------------------------------------------------------------------------------------------------------
+//Download a WebPage and then automatically run it on your browser
+/*import java.awt.*;
+import java.io.*;
+import java.net.URI;
+import java.net.URL;
+import java.net.MalformedURLException;
+
+public class Main {
+    public static void downloadWebPage(String webpage) {
+        try {
+            URI uri = new URI(webpage);
+            URL url = uri.toURL();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+
+            BufferedWriter wr = new BufferedWriter(new FileWriter("webpage.html"));
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                wr.write(line);
+                wr.newLine();
+            }
+
+            br.close();
+            wr.close();
+
+            System.out.println("Webpage Downloaded Successfully!");
+
+            //If the webpage.html file is desktop supported then .get that file and then browse it by .browse
+
+            File htmlFile = new File("webpage.html"); //passing file name cuz we have to open it after downloading
+              if(Desktop.isDesktopSupported()){
+                  Desktop.getDesktop().browse(htmlFile.toURI());
+              }
+
+        } catch (MalformedURLException | IllegalArgumentException e) {
+            System.out.println("Invalid URL!");
+        } catch (IOException e) {
+            System.out.println("Error, file not downloaded!");
+        } catch (Exception e) {
+            System.out.print("Invalid URI Syntax!");
+        }
+
+    }
+    public static void main(String[] args) {
+        String url = "https://en.wikipedia.org/wiki/Lionel_Messi#";
+
+        downloadWebPage(url); //path = Local Disk C-->Users-->Aamir-->IdeaProjects-->untitled1
+    }
+}*/
+
+//----------------------------------------------------------------------------------------------------------------------
+//Download an image from the webpage
+
+/*import java.io.*; //import statements
+import java.net.*;
+
+public class Main { //main class
+    public static void downloadImage(String imageUrl){ //main method to download the image
+        try{
+            URL url = new URL(imageUrl); //defining an url for our image
+
+             InputStream inputStream = url.openStream(); //input stream which reads our data and open stream lets you read the data directly from a website
+               OutputStream outputStream = new FileOutputStream("imageUrl.jpg"); //output stream that sends our data
+                                                                                       //and define its name and format
+                 byte[] buffer = new byte[2048]; //image in the form of bytes
+                   int byteRead;
+
+            while ((byteRead = inputStream.read(buffer)) != -1){ //continue reading until there's no bytes left
+                outputStream.write(buffer, 0, byteRead); //giving the object at a specific index and how many bytes have been read only as parameters
+            }
+
+               inputStream.close(); //closing both streams
+                 outputStream.close();
+                   System.out.println("Image downloaded successfully!"); //indicating that the operation is successful
+        }
+            catch (IOException e){ //if not successful, send the message
+                System.out.println("Error reading the file: " + e.getMessage());
+            }
+    }
+
+    public static void main(String[] args) { //main function
+        String imageUrl = "https://en.wikipedia.org/wiki/Lionel_Messi#/media/File:Lionel_Messi_NE_Revolution_Inter_Miami_7.9.25-055.jpg";
+           downloadImage(imageUrl);      //define image url and call the downloadImage function to download
+    }
+}*/
+
+//----------------------------------------------------------------------------------------------------------------------
+//Download a webpage and download it's title in a seperate text file
+
+/*import java.io.*;
+import java.net.URI;
+import java.net.URL;
+import java.net.MalformedURLException;
+
+public class Main {
+    public static void downloadTitle(String webpage) {
+           String htmlfile = "webpage.html";
+           String txtfile= "title.txt";
+
+           try{
+               URI uri = new URI(webpage);
+               URL url = uri.toURL();
+
+               BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+               BufferedWriter wr = new BufferedWriter(new FileWriter(htmlfile));
+               BufferedWriter tr = new BufferedWriter(new FileWriter(txtfile));
+
+               boolean titleFound = false;
+               String line;
+               while((line = br.readLine())!= null) {
+                   wr.write(line);
+                   wr.newLine();
+
+                   if (!titleFound && line.contains("<title>")) {
+                       int start = line.indexOf("<title>") + "<title>".length();
+                       int end = line.indexOf("</title>");
+                       if (end > start) {
+                           String title = line.substring(start, end).trim();
+                           tr.write(title);
+                           System.out.println("Title found: " + title);
+                           titleFound = true;
+                       }
+                   }
+               }
+
+               br.close();
+               wr.close();
+               tr.close();
+
+               System.out.println("Webpage downloaded successfully: " + htmlfile);
+               System.out.println("Title saved to: " + txtfile);
+
+
+           } catch(MalformedURLException e){
+               System.out.println("Error1");
+           } catch(Exception e){
+               System.out.println("Error2");
+           }
+    }
+
+    public static void main(String[] args) {
+        String url = "https://en.wikipedia.org/wiki/Lionel_Messi";
+        downloadTitle(url);
+    }
+}*/
