@@ -1,0 +1,183 @@
+//SERVER CODE
+
+//import statements for input-output
+
+/import java.io.;
+import java.net.*;
+
+//class named Server
+public class Server{
+    //main class with Exception in case of any issue with Server
+    public static void main(String[] args) throws IOException{
+        
+        //Class of ServerSocket with object to get a socket number
+        ServerSocket serverSocket = new ServerSocket(1894);
+          System.out.println("Server Online, Waiting for the client to connect");
+        
+        //Class of Socket with clientSocket object which .accepts the client's socket
+        Socket clientSocket = serverSocket.accept();
+          System.out.println("Client successfully connected!");
+        
+        //input stream for data
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        
+        //output stream for data and then simultaneously flushing the data
+           PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),true);
+        
+        
+        //reading the data from the client(taking input)
+         String message = in.readLine();
+           System.out.println("Client says: " + message);
+              System.out.println("Your message has been recieved by the server!");
+        
+        //closing both of the sockets
+        clientSocket.close();
+          serverSocket.close();
+    }
+}*/
+
+//CLIENT CODE
+
+//import statements for input-output
+/import java.io.;
+import java.net.*;
+
+//class named Client
+public class Client{
+    
+    //main class with Exception in case of any error from client's side
+    public static void main(String[] args)throws IOException{
+        
+       //Class and object of clientSocket to get port number from client (localhost if same device) 
+        ClientSocket clientSocket = new ClientSocket("localhost" , 1894);
+        
+        //output stream 1st then input so there isn't a deadlock
+        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),true);
+        
+        //input stream
+        BufferedReader in = new BufferedReader(new(clientSocket.getInputStream()));
+          System.out.println("Client says hello!");
+        
+        //For Server's response
+        String response = in.readLine();
+          System.out.println("The server says: " + response);
+        
+        //closing the clientSocket
+        clientSocket.close();
+    }
+}*/
+
+//----------------------------------------------------------------------------------------------------------------------
+package tcp_package;
+
+import java.io.*;
+import java.net.*;
+
+public class SimpleTCPClient {
+    public static void ClientFunc() throws Exception {
+        Socket socket = new Socket("localhost", 8888);
+        System.out.println("Connected to server!");
+
+
+        BufferedReader inputFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter outputToServer = new PrintWriter(socket.getOutputStream(), true);
+
+        BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+
+        String msgToServer, msgFromServer;
+
+        while (true) {
+            System.out.print("You: ");
+            msgToServer = keyboard.readLine();
+            outputToServer.println(msgToServer);
+
+            if (msgToServer.equalsIgnoreCase("exit")) break;
+
+            msgFromServer = inputFromServer.readLine();
+            if (msgFromServer.equalsIgnoreCase("exit")) break;
+
+            System.out.println("Server: " + msgFromServer);
+        }
+
+        socket.close();
+        System.out.println("Client closed.");
+    }
+
+    public static void send(String ip, int port, String msg) throws Exception{
+         Socket socket = new Socket(ip, port);
+        
+        // Setup output stream to send data to the server
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+        // Send message to the server
+        System.out.println(msg);
+
+        socket.close();
+    }
+
+    public static void getResponse(String ip, int port) throws Exception{
+         Socket socket = new Socket(ip, port);
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        // Send message to the server
+         String response = in.readLine();
+        System.out.println("Server says: " + response);
+
+        socket.close();
+    }
+
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+package tcp_package;
+
+import java.io.*;
+import java.net.*;
+
+public class SimpleTCPServer {
+
+    public static void main(String[] args) throws Exception {
+        // Create a ServerSocket on port 8888
+        ServerSocket serverSocket = new ServerSocket(8888);
+        System.out.println("Server online. Waiting for a client to connect...");
+
+        // Accept one client connection
+        Socket clientSocket = serverSocket.accept();
+        System.out.println("Client connected!");
+
+        // Input from client
+        BufferedReader inputFromClient = new BufferedReader(
+            new InputStreamReader(clientSocket.getInputStream())
+        );
+
+        // Output to client
+        PrintWriter outputToClient = new PrintWriter(clientSocket.getOutputStream(), true);
+
+        // Keyboard input for server user
+        BufferedReader keyboard = new BufferedReader(
+            new InputStreamReader(System.in)
+        );
+
+        String msgFromClient, msgToClient;
+
+        while (true) {
+            // Read client message
+            msgFromClient = inputFromClient.readLine();
+            if (msgFromClient == null || msgFromClient.equalsIgnoreCase("exit")) break;
+            System.out.println("Client: " + msgFromClient);
+
+            // Send reply
+            System.out.print("You: ");
+            msgToClient = keyboard.readLine();
+            outputToClient.println(msgToClient);
+
+            if (msgToClient.equalsIgnoreCase("exit")) break;
+        }
+
+        // Close sockets
+        clientSocket.close();
+        serverSocket.close();
+        System.out.println("Server closed.");
+    }
+}
