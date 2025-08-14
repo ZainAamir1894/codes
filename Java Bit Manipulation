@@ -1,0 +1,130 @@
+// GET BIT MANIPULATION WITH LEFT SHIFT AND WITH & OPERATOR
+/*import java.util.Scanner;
+
+public class Main{
+    public static void main(String[] args) {
+     Scanner input = new Scanner(System.in);
+         System.out.println("Enter number : ");
+            int n = input.nextInt();
+
+         System.out.println("Enter position: ");
+            int p = input.nextInt();
+
+            int bitMask = 1<<p; //or use >> for right shift
+
+            if((bitMask & n) == 0){
+                System.out.println("Bit was zero");
+            } else {
+                System.out.println("Bit was one");
+            }
+    }
+}*/
+
+//----------------------------------------------------------------------------------------------------------------------
+// SET BIT MANIPULATION WITH LEFT SHIFT AND OR | OPERATOR
+
+/*import java.util.Scanner;
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter number : ");
+        int n = input.nextInt();
+
+        System.out.println("Enter position: ");
+        int p = input.nextInt();
+
+        int bitMask = 1<<p; //or use >> for right shift
+           int newNum = bitMask | n;
+                System.out.println("Your new number is: " + newNum);
+    }
+}*/
+
+//----------------------------------------------------------------------------------------------------------------------
+// CLEAR BIT MANIPULATION WITH LEFT SHIFT AND & WITH ~(NOT) OPERATOR
+/*import java.util.Scanner;
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter number : ");
+        int n = input.nextInt();
+
+        System.out.println("Enter position: ");
+        int p = input.nextInt();
+
+        int bitMask = 1<<p; //or use >> for right shift
+          int notBitMask = ~(bitMask);
+
+             int newNum = notBitMask & n;
+               System.out.println("The number is: " + newNum);
+    }
+}*/
+//----------------------------------------------------------------------------------------------------------------------
+/*public class Main{
+    public static void main(String[] args) {
+        byte b = 85;
+
+        byte r = (byte) (b & 0b1); //85 = 0 1010101, 0b1 = 1 = 0 0000001
+        System.out.println(r);
+    }
+}*/
+//----------------------------------------------------------------------------------------------------------------------
+//Change a bit from 0 to 1 (Setting a Bit)
+/*import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner inp = new Scanner(System.in);
+           System.out.println("Enter your number: ");
+               int n = inp.nextInt();
+
+           System.out.println("Enter position: ");
+             int p = inp.nextInt();
+
+            //Our BitMask
+            int bM = 1<<p;
+            //OR Operation
+              int newNum = n | bM;
+
+            System.out.println("Your new number is: " + newNum);
+            /* What actually happened:
+              85 = 1010101
+              consider user gives position: 3
+              so the 1 at the very end will move to the 3rd index number and that will be our bitMask
+              now,
+               85 =  1010101
+               bM =  0001000
+                     ---OR--
+                     1011101 = 93
+
+    }
+} */
+
+//----------------------------------------------------------------------------------------------------------------------
+//Change a bit from 1 to 0 (Clearing a bit)
+/*import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner inp = new Scanner(System.in);
+          System.out.println("Enter the number: ");
+             int n = inp.nextInt();
+
+          System.out.println("Enter the position: ");
+             int p = inp.nextInt();
+
+             //Our BitMask
+             int bM = 1<<p;
+
+             //Negating the BitMask so the 1 changes to 0 and 0 to 1
+               int notBM = ~(bM);
+
+               //Performing the AND operation between our new BitMask and given number
+                 int newNum = notBM & n;
+
+               System.out.println("The number is: " + newNum);
+
+    }
+}*/
+//----------------------------------------------------------------------------------------------------------------------
