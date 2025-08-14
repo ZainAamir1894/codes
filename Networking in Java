@@ -68,116 +68,116 @@ public class Client{
 }*/
 
 //----------------------------------------------------------------------------------------------------------------------
-package tcp_package;
+//TCPClient when both server and client are on same device
 
-import java.io.*;
+//necessary import statements for input/output and networking principles 
+*/import java.io.*;
 import java.net.*;
 
-public class SimpleTCPClient {
-    public static void ClientFunc() throws Exception {
-        Socket socket = new Socket("localhost", 8888);
-        System.out.println("Connected to server!");
+//public class
+public class Main{
+   //method for client function
+       public static void ClientFunc() throws Exception{
+           //Socket class/object which depends on a localhost ip and a device port no.
+            Socket socket = new Socket("localhost" , 8888);
 
+              //For input from the server we use an InputStreamReader to convert raw bytes into characters and the socket gets it
+               BufferedReader inputFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-        BufferedReader inputFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        PrintWriter outputToServer = new PrintWriter(socket.getOutputStream(), true);
+             //To write to the server we'll use OutputStream with a PrintWriter class
+                  PrintWriter outputToServer = new PrintWriter(socket.getOutputStream());
 
-        BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+            //For transmitting the data between client-server through keyboard and giving input
+                     BufferedWriter keyboard = new BufferedReader(new InputStreamReader(System.in));
 
-        String msgToServer, msgFromServer;
+              //Two String type objects to recieve message from Server and for sending message to Server 
+                 String msgFromServer, msgToServer;
 
-        while (true) {
-            System.out.print("You: ");
-            msgToServer = keyboard.readLine();
-            outputToServer.println(msgToServer);
+                   //infinite loop til function breaks
+                    while(true){
+                   System.out.println("Client says: ");
 
-            if (msgToServer.equalsIgnoreCase("exit")) break;
+                  //To send the message to server we use the keyboard object which reads all the data further
+                    msgToServer = keyboard.readLine();
 
-            msgFromServer = inputFromServer.readLine();
-            if (msgFromServer.equalsIgnoreCase("exit")) break;
+                   //printing the message
+                      outputToServer.println(msgToServer);
 
-            System.out.println("Server: " + msgFromServer);
+                  //if message to the server is empty then exiting 
+                      if(msgToServer == null || msgToServer.equalsIgnoreCase("exit")) break;
+
+                      //To receive the message from the server we use the inputFromServer object and read the data
+                          msgFromServer = inputFromServer.readLine();
+
+                  //If we send an empty message(no message) then exiting
+                      if(msgFromServer == null || msgFromServer.equalsIgnoreCase("exit") break;
+
+                         System.out.println("Server says: " + msgFromServer);
         }
 
-        socket.close();
-        System.out.println("Client closed.");
+        //Closing the socket and then client disconnects 
+         socket.close();
+         System.out.println("Client Offline...");
     }
 
-    public static void send(String ip, int port, String msg) throws Exception{
-         Socket socket = new Socket(ip, port);
-        
-        // Setup output stream to send data to the server
-        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+     //Method for sending the message
+     public static void send(String ip, int port, String msg){
+       try(Socket socket = new Socket(ip, port);
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true))
+       {
+        out.println(msg);
+         }
+     }
 
-        // Send message to the server
-        System.out.println(msg);
-
-        socket.close();
+ //Method for recieving the response 
+     public static void getResponse(String ip, int port){
+      try(Socket socket = new Socket(ip, port);
+      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())){
+          String response = in.readLine();
+          if(response != null){
+             System.out.println("Server says: " + response);
+            } else {
+             System.out.println("No response from server.");
+             }
+         }
     }
+}*/
+//----------------------------------------------------------------------------------------------------------
+//TCPServer (for same device)
 
-    public static void getResponse(String ip, int port) throws Exception{
-         Socket socket = new Socket(ip, port);
-        
-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-        // Send message to the server
-         String response = in.readLine();
-        System.out.println("Server says: " + response);
-
-        socket.close();
-    }
-
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-package tcp_package;
-
-import java.io.*;
+/*import java.io.*;
 import java.net.*;
 
-public class SimpleTCPServer {
-
-    public static void main(String[] args) throws Exception {
-        // Create a ServerSocket on port 8888
+public class Main {
+    public static void ServerFunc() throws Exception {
         ServerSocket serverSocket = new ServerSocket(8888);
-        System.out.println("Server online. Waiting for a client to connect...");
+          System.out.println("Server online. Waiting for client to connect....");
 
-        // Accept one client connection
-        Socket clientSocket = serverSocket.accept();
-        System.out.println("Client connected!");
+          Socket clientSocket = serverSocket.accept();
+          System.out.println("Client Connected!");
 
-        // Input from client
-        BufferedReader inputFromClient = new BufferedReader(
-            new InputStreamReader(clientSocket.getInputStream())
-        );
+          BufferedReader inputFromClient = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-        // Output to client
-        PrintWriter outputToClient = new PrintWriter(clientSocket.getOutputStream(), true);
+          PrintWriter outputToClient = new PrintWriter(clientSocket.getOutputStream() , true);
 
-        // Keyboard input for server user
-        BufferedReader keyboard = new BufferedReader(
-            new InputStreamReader(System.in)
-        );
+          BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 
-        String msgFromClient, msgToClient;
+          String msgFromClient, msgToClient;
 
-        while (true) {
-            // Read client message
-            msgFromClient = inputFromClient.readLine();
-            if (msgFromClient == null || msgFromClient.equalsIgnoreCase("exit")) break;
-            System.out.println("Client: " + msgFromClient);
+          while(true){
+             msgFromClient = inputFromClient.readLine();
+             if(msgFromClient == null || msgFromClient.equalsIgnoreCase("exit")) break;
+              System.out.println("Client says: " + msgFromClient);
 
-            // Send reply
-            System.out.print("You: ");
-            msgToClient = keyboard.readLine();
-            outputToClient.println(msgToClient);
+              System.out.println("You: ");
+              msgToClient = keyboard.readLine();
+              outputToClient.println(msgToClient);
 
-            if (msgToClient.equalsIgnoreCase("exit")) break;
-        }
+               if(msgToClient == null || msgToClient.equalsIgnoreCase("exit")) break;
+          }
 
-        // Close sockets
-        clientSocket.close();
-        serverSocket.close();
-        System.out.println("Server closed.");
+          serverSocket.close();
+          clientSocket.close();
+          System.out.println("Server Offline....");
     }
-}
+}*/
