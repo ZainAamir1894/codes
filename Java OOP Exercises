@@ -547,3 +547,82 @@ public class Main {
     }
 }*/
 //------------------------------------------------------------------------------------------------------------------
+/*import java.util.Scanner;
+
+class Distance {
+    private double distance;
+    private double time;
+    private double velocity;
+
+    private static final double MERCURY = 130.7;
+    private static final double VENUS = 190.78;
+    private static final double MARS = 225;
+    private static final double JUPITER = 778;
+    private static final double SATURN = 1308;
+    private static final double URANUS = 2929;
+    private static final double NEPTUNE = 4347;
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void calcTime() {
+        if (velocity != 0) {
+            this.time = distance / velocity;
+        } else {
+            System.out.println("Error! velocity can't be zero.");
+        }
+    }
+
+    public static double getPlanetDistance(String planet) {
+        planet = planet.toLowerCase();
+        switch (planet) {
+            case "mercury":
+                return MERCURY;
+            case "venus":
+                return VENUS;
+            case "mars":
+                return MARS;
+            case "jupiter":
+                return JUPITER;
+            case "saturn":
+                return SATURN;
+            case "uranus":
+                return URANUS;
+            case "neptune":
+                return NEPTUNE;
+            default: return -1;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner inp  = new Scanner(System.in);
+          System.out.println("Enter planet from the Solar System: ");
+             String planet = inp.nextLine();
+
+        double planetDist = Distance.getPlanetDistance(planet);
+            if(planetDist == -1){
+                System.out.println("Error! Invalid Planet.");
+                return;
+
+            }
+        System.out.println("Enter velocity (in km/s): ");
+            double velocity = inp.nextDouble();
+
+            Distance d = new Distance();
+            d.setDistance(planetDist);
+            d.setVelocity(velocity);
+            d.calcTime();
+
+            System.out.println("Distance to " + planet + ": " + planetDist + " million km");
+            System.out.println("Time to reach: " + d.getTime() + " seconds ");
+        }
+    }*/
