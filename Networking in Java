@@ -365,3 +365,47 @@ public class Main {
         }
     }
 }
+//--------------------------------------------------------------------------------------------------------------
+//MULTICLIENT CLIENT CODE
+import java.io.*;
+import java.net.*;
+
+public class Client {
+    public static void main(String[] args) throws Exception {
+        // connect to server
+        Socket socket = new Socket("localhost", 8888);
+        System.out.println("Connected to server.");
+
+        // for sending messages
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        // for receiving messages
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        // for reading from keyboard
+        BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
+
+        // separate thread for listening to server messages
+        new Thread(() -> {
+            try {
+                String response;
+                while ((response = in.readLine()) != null) {
+                    System.out.println("Server: " + response);
+                }
+            } catch (IOException e) {
+                System.out.println("Disconnected from server.");
+            }
+        }).start();
+
+        // main thread: read user input and send to server
+        String message;
+        while ((message = userInput.readLine()) != null) {
+            out.println(message);
+
+            if (message.equalsIgnoreCase("quit")) {
+                break;
+            }
+        }
+
+        socket.close();
+    }
+}
+
