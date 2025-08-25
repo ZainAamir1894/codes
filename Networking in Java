@@ -182,3 +182,186 @@ public class Main {
           System.out.println("Server Offline....");
     }
 }*/
+//------------------------------------------------------------------------------------------------------------
+//COMMANDS TO SERVER (QUIT/FILES/GET)
+import java.io.*;
+import java.net.*;
+
+public class Server {
+    public static void main(String[] args) throws Exception {
+        ServerSocket serverSocket = new ServerSocket(8888);
+
+        Socket socket = serverSocket.accept();
+
+        BufferedReader inputFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        PrintWriter outputToClient = new PrintWriter(socket.getOutputStream(), true);
+
+        String msgFromClient, msgToClient = "";
+
+        while (true) {
+            msgFromClient = inputFromClient.readLine();
+
+            if (msgFromClient.equalsIgnoreCase("quit")) {
+                break;
+            } else if (msgFromClient.split(" ")[0].equalsIgnoreCase("files")) {
+                File folder = new File("C:\\Users\\Abdullah\\Desktop\\java-zain\\files");
+
+                File[] files = folder.listFiles();
+
+                StringBuilder FilesNamesList = new StringBuilder();
+
+                for (File file : files) {
+                    FilesNamesList.append(file.getName()).append("\n");
+                }
+                msgToClient = FilesNamesList.toString();
+
+            } else if (msgFromClient.split(" ")[0].equalsIgnoreCase("get")) {
+                String fileName = msgFromClient.split(" ")[1];
+
+                BufferedReader br = new BufferedReader(
+                        new FileReader("C:\\Users\\Abdullah\\Desktop\\java-zain\\files\\" + fileName));
+
+                StringBuilder fileContent = new StringBuilder();
+                String line;
+                while ((line = br.readLine()) != null) {
+                    fileContent.append(line).append("\n");
+                }
+                br.close();
+                msgToClient = fileContent.toString();
+
+            }
+            System.out.println("Client Says: " + msgFromClient);
+            outputToClient.println(msgToClient);
+            msgToClient = " ";
+        }
+        socket.close();
+        serverSocket.close();
+        System.out.println("Server going offline...");
+
+    }
+}
+//------------------------------------------------------------------------------------------------------------
+//COMMANDS TO GIVE TO THE SERVER (CLIENT CODE)
+import java.io.*;
+import java.net.*;
+
+public class Client {
+    public static void main(String[] args) throws Exception {
+        Socket socket = new Socket("localhost", 8888);
+        System.out.println("Client successfully connected to server!");
+
+        BufferedReader inputFromServer = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
+
+        PrintWriter outputToServer = new PrintWriter(socket.getOutputStream(), true);
+
+        BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+
+        String msgToServer, msgFromServer;
+
+        while (true) {
+          System.out.print("You: ");
+          msgToServer = keyboard.readLine();
+      
+          outputToServer.println(msgToServer);
+      
+          if (msgToServer.equalsIgnoreCase("quit")) break;
+      
+        
+          StringBuilder response = new StringBuilder();
+          String line;
+          while (!((line = inputFromServer.readLine()).equals(""))) {
+              response.append(line).append("\n");
+          }
+      
+          System.out.println("Server says:\n" + response.toString());
+      }
+      
+
+        socket.close();
+        System.out.println("Client offline...");
+    }
+}
+//------------------------------------------------------------------------------------------------------------
+//MulitClient Server java
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+public class Main {
+    //A private hashSet of the printWriter for clientWriters that handles broadcasting the message
+    private static Set<PrintWriter> clientWriters = new HashSet<>();
+
+    public static void main(String[] args) throws Exception {
+        //Starting the Server
+        ServerSocket serverSocket = new ServerSocket(8888);
+        System.out.println("Server Online! Waiting for client to connect.");
+
+        while (true) {
+            //running the loop for the server
+            Socket socket = serverSocket.accept();
+            //accepting client's connection
+            System.out.println("Client connected successfully!");
+
+            //a clientHandler that takes a socket of a specific client and starts a new Thread to serve it
+            new ClientHandler(socket).start();
+        }
+    }
+
+    //Per-Client Handling, extended by the serving Thread for input and output
+    private static class ClientHandler extends Thread {
+        private Socket socket;
+        private PrintWriter out;
+        private BufferedReader in;
+
+        //Constructor which handles the socket of a client, it must be public since in main, we need to start 
+        //the thread
+        public ClientHandler(Socket socket) {
+            this.socket = socket;
+        }
+
+        public void run() {
+            try {
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out = new PrintWriter(socket.getOutputStream(), true);
+
+                /* To write the clientWriters to the global set and make sure two clients don't override each
+                other's data
+                 */
+                synchronized (clientWriters) {
+                    clientWriters.add(out);
+                }
+ 
+                //Message Reading loop
+                String message;
+                while ((message = in.readLine()) != null) {
+                    System.out.println("Response: " + message);
+
+                    synchronized (clientWriters) {
+                        /* iterate through each synchronized clientWriter and if a writer does not belong to 
+                          the sender itself (out) then send the message */
+                        for (PrintWriter writer : clientWriters) {
+                            if (writer != out) {
+                                writer.println(message);
+                            }
+                        }
+                    }
+                }
+                
+                //Exception Handling
+            } catch (IOException e) {
+                System.out.println("Error." + e.getMessage());
+            } finally {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                }
+                //finally removing the sender and breaking operation
+                synchronized (clientWriters) {
+                    clientWriters.remove(out);
+                }
+            }
+        }
+    }
+}
