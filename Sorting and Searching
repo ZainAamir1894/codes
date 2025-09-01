@@ -149,3 +149,38 @@ public class LinkedListSort {
         }
     }
 }*/
+//---------------------------------------------------------------------------
+//BINARY SEARCH 
+/*public class BinarySearch { //class
+    public static int binarySearch(int[] arr, int target){   //package includes an array and a target index
+        int left = 0;   //side from which array starts
+        int right = arr.length-1;  //side at which array ends
+
+         while(left <= right){   //index at left must be less than equal to the further index
+            int mid = left + (right-1)/2 ; //right -1 because array starts from 0 and ends at 9 means 10 total positions
+
+            if(arr[mid] == target) {
+                return mid; // because mid is equal to target
+            } else if (arr[mid] <= target) {
+                left = mid + 1; // if the target is greater than the middle value then left moves at +1 over mid
+            } else {
+                right = mid -1; //if the target is lesser than the middle value then right moves at -1 over mid
+            }
+        }
+
+        return - 1; //exception that if a value is not present in the array
+    }
+    public static void main(String[] args){  // main function to test binary search
+        int[] sortedArray = {1,3,5,7,9,11,13,15}; //predefined array
+        int target = 7; //data
+
+        int result = binarySearch(sortedArray, target); //resulting index which includes an array and data(target)
+
+        if(result != -1){  //if element exists in an array then print that it is found at particular index
+
+            System.out.println("Element found at the following index: " + result);
+        } else {
+            System.out.println("Element not found.");  //if not found
+        }
+    }
+}*/
