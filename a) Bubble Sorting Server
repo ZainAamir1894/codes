@@ -1,0 +1,80 @@
+//SERVER CODE WHICH SORTS ARRAY GIVEN BY CLIENT USING BUBBLE SORT
+import java.io.*;
+import java.net.*;
+
+public  class Main {
+    //Bubble Sorting method to sort the given array.
+    public static void BubbleSort(int[] arr){
+        for(int i = 0; i<arr.length-1; i++){
+            for(int j = 0; j<arr.length-i-1; j++){
+                if(arr[j] > arr[j+1]){
+                    int temp = arr [j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                }
+            }
+        }
+    }
+
+    //Main method
+    public static void main(String[] args) throws Exception {
+
+        //Server Operating on a port number.
+        ServerSocket serverSocket = new ServerSocket(9090);
+        System.out.println("Server Online. Waiting for Client to Connect...");
+
+        //Waiting for client's connection.
+        Socket clientSocket = serverSocket.accept();
+        System.out.println("Client connected successfully!");
+
+        //File Streams to send and receive data, BufferedReader stores the data in the buffer and PrintWriter sends data.
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+        //Message (given array)
+        String message;
+
+        //while message is not empty perform further operation.
+        while((message = in.readLine()) != null){
+
+            //Temporary storage for elements with space.
+            String[] fields = message.split(" ");
+
+            //Storing actual elements in the storage.
+            int[] arr = new int[fields.length];
+
+            //Iterating through each element of the array.
+            for(int i = 0; i< fields.length; i++) {
+
+                //Converting elements into integer type.
+                arr[i] = Integer.parseInt(fields[i]);
+            }
+                System.out.println("Array to be sorted: " + message);
+
+            //Calling the Bubble Sort method.
+                BubbleSort(arr);
+
+                //To send the array to client, creating a string-builder which sends the array as a string.
+                StringBuilder sb = new StringBuilder();
+
+                //an iterator (num) which goes through all elements of the array.
+                for(int num : arr) {
+
+                    //appending all the elements with spaces.
+                    sb.append(num).append(" ");
+                }
+
+                //Final sorted array which is converted into string and all whitespaces are removed.
+                  String sortedArray = sb.toString().trim();
+                  out.println("Sorted Array: " + sortedArray);
+
+
+
+        }
+        //Closing all sockets
+          serverSocket.close();
+          clientSocket.close();
+          in.close();
+          out.close();
+    }
+}
