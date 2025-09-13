@@ -1,0 +1,42 @@
+//CLIENT CODE THAT TAKES AN UNSORTED ARRAY AS INPUT FROM THE USER
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+
+        Socket socket = new Socket("localhost" , 9090);
+
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number of elements in your array: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+
+        System.out.println("Enter " + n + " elements: ");
+        for(int i = 0; i< arr.length; i++){
+            arr[i] = sc.nextInt();
+        }
+
+        //A String builder to send the unsorted array to the server. We need string builders for both parties.
+        StringBuilder sb = new StringBuilder();
+        for(int num : arr){
+            sb.append(num).append(" ");
+        }
+        out.println(sb.toString().trim());
+
+        System.out.println("Your array has been received by the Server!");
+
+        String sortedArray = in.readLine();
+        System.out.println("Server responded with: " + sortedArray);
+
+        socket.close();
+        in.close();
+        out.close();
+
+    }
+}
