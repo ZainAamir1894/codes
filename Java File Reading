@@ -239,3 +239,44 @@ public class Main {
         }
     }
 } */
+
+//------------------------------
+import java.io.*;
+import java.util.*;
+
+public class Sales {
+    public static void main(String[] args) {
+        Map<String, Integer> prodWise = new HashMap<>();
+
+        try {
+            File file = new File("C:\\Users\\java\\temp\\EVE01Sales.txt");
+            Scanner sc = new Scanner(file);
+
+            HashMap<String, Integer> prod = new HashMap<>();
+
+            String line = sc.nextLine();
+            while(sc.hasNext()){
+                line = sc.nextLine();
+
+                String[] arr  = line.split("\t");
+
+                if(!prod.containsKey(arr[5])){
+                    prod.put(arr[5] , value);
+                }
+
+
+                int sum = Integer.parseInt(arr[5]) * Integer.parseInt(arr[3]);
+
+                prod.put(arr[5], (prod.get(arr[5] + sum)));
+
+            }
+
+            for(String pr : prod.keySet()){
+                System.out.println(p + " : " + prod.get(pr));
+            }
+
+        } catch (IOException e) {
+            System.out.println(e.printStackTrace());
+        }
+    }
+}
