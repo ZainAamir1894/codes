@@ -280,3 +280,52 @@ public class Sales {
         }
     }
 }
+
+//----------------------------------------------------------------------------------------------------------
+
+import java.io.*;
+import java.util.*;
+
+public class Sales {
+    public static void main(String[] args) {
+        try {
+            File file = new File("C:\\java\\temp\\EVE01Sales.txt");
+            Scanner sc = new Scanner(file);
+
+            HashMap<String, Integer> prod = new HashMap<>();
+
+            // Skip the header line
+            if (sc.hasNextLine()) {
+                sc.nextLine();
+            }
+
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                String[] arr = line.split("\t");
+
+                String productName = arr[4];
+                int quantity = Integer.parseInt(arr[5]);
+                int price = Integer.parseInt(arr[6]);
+
+                int total = quantity * price;
+
+                // Add to existing total or start at 0
+                prod.put(productName, prod.getOrDefault(productName, 0) + total);
+            }
+
+            for (String pr : prod.keySet()) {
+                System.out.println(pr + " : " + prod.get(pr));
+            }
+
+            sc.close();
+
+        } catch (IOException e) {
+            System.out.println("File not found or error reading file.");
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.out.println("Error parsing numbers from file.");
+            e.printStackTrace();
+        }
+    }
+}
+
