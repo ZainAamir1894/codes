@@ -286,46 +286,61 @@ public class Sales {
 import java.io.*;
 import java.util.*;
 
-public class Sales {
+public class RegionAndProduct {
+
     public static void main(String[] args) {
         try {
-            File file = new File("C:\\java\\temp\\EVE01Sales.txt");
+            File file = new File("C:\\temp\\EVE01Sales.txt");
             Scanner sc = new Scanner(file);
 
+            HashMap<String, Integer> regionName = new HashMap<>();
             HashMap<String, Integer> prod = new HashMap<>();
 
-            // Skip the header line
-            if (sc.hasNextLine()) {
-                sc.nextLine();
-            }
+            processSalesData(sc, regionName, prod);
 
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                String[] arr = line.split("\t");
+            System.out.println("Region-Wise Sales:\n");
+            printSales(regionName);
 
-                String productName = arr[4];
-                int quantity = Integer.parseInt(arr[5]);
-                int price = Integer.parseInt(arr[6]);
-
-                int total = quantity * price;
-
-                // Add to existing total or start at 0
-                prod.put(productName, prod.getOrDefault(productName, 0) + total);
-            }
-
-            for (String pr : prod.keySet()) {
-                System.out.println(pr + " : " + prod.get(pr));
-            }
-
-            sc.close();
+            System.out.println("\nProduct-Wise Sales:\n");
+            printSales(prod);
 
         } catch (IOException e) {
-            System.out.println("File not found or error reading file.");
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-            System.out.println("Error parsing numbers from file.");
-            e.printStackTrace();
+            System.out.println("Error reading file");
+        }
+    }
+
+    // Function to read and handle file data
+    public static void processSalesData(Scanner sc, HashMap<String, Integer> regionName, HashMap<String, Integer> prod) {
+        if (sc.hasNextLine()) sc.nextLine(); // skip header
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine().trim();
+            String[] fields = line.split("\t");
+
+            String region = fields[1];
+            String productName = fields[3];
+            int qty = Integer.parseInt(fields[4]);
+            int uPrice = Integer.parseInt(fields[5]);
+            int amount = qty * uPrice;
+
+            // Use your loop-style logic via generalized function
+            updateSales(regionName, region, amount);
+            updateSales(prod, productName, amount);
+        }
+    }
+
+    // ✅ Generalized function using your loop-style logic
+    public static void updateSales(HashMap<String, Integer> map, String key, int amount) {
+        while (!map.containsKey(key)) {
+            map.put(key, 0);
+        }
+        map.put(key, map.get(key) + amount);
+    }
+
+    // Printing function
+    public static void printSales(HashMap<String, Integer> map) {
+        for (String key : map.keySet()) {
+            System.out.println(key + " : " + map.get(key));
         }
     }
 }
-
