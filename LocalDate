@@ -1,0 +1,28 @@
+mport java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class Main {
+    public static void main(String[] args) {
+        LocalDate date = LocalDate.of(2025, 4, 19);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String formDate = date.format(formatter);
+        System.out.println("Formatted/Customized Date: " + formDate);
+        LocalDate date1 = LocalDate.now();
+        System.out.println("Current Date: " + String.valueOf(date1));
+        String text = "30-10-2025";
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate date2 = LocalDate.parse(text, formatter1);
+        System.out.println("Parsed Date: " + String.valueOf(date2));
+        LocalDate date3 = LocalDate.of(2026, 6, 29);
+        System.out.println("Year: " + date3.getYear());
+        System.out.println("Month: " + String.valueOf(date3.getMonth()));
+        System.out.println("Day Of Month: " + date3.getDayOfMonth());
+        LocalDate date4 = LocalDate.of(2026, 6, 29);
+        System.out.println(date4.plusDays(10L));
+        System.out.println(date4.minusDays(2L));
+        LocalDate date5 = LocalDate.of(2026, 2, 19);
+        System.out.println("length of month: " + date5.lengthOfMonth());
+        LocalDate date6 = LocalDate.of(2026, 6, 29);
+        System.out.println(date6.toString());
+    }
+}
