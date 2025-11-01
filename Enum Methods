@@ -1,0 +1,16 @@
+enum DaysOfWeek{
+    SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
+}
+
+public class Main {
+    public static void main(String[] args) {
+        for(DaysOfWeek myDay : DaysOfWeek.values()) { //.values prints all the enum values
+            System.out.println(myDay);
+        }
+            DaysOfWeek d1 = DaysOfWeek.valueOf("MONDAY"); //returns enum constant with specified name
+            System.out.println("value of d1: " + d1);
+            System.out.println("Ordinal of Monday: " + DaysOfWeek.MONDAY.ordinal()); //returns position of enum
+            System.out.println("Name of enum: " + DaysOfWeek.MONDAY.name()); //returns name of specified enum
+            System.out.println("Converted Enum: " + DaysOfWeek.MONDAY.toString().toLowerCase()); //returns as a string
+    }
+}
