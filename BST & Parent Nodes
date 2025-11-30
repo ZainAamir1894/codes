@@ -55,7 +55,7 @@ public class Binary {
                 return;
             }
             if(root.left != null || root.right != null){
-                System.out.print(root.data + " is parent node.");
+                System.out.println(root.data + " is parent node.");
             }
 
             parentNodeRec(root.left);
@@ -64,8 +64,21 @@ public class Binary {
         }
 
         public void parentNode(){
-            System.out.println("Parent Nodes: \n"); 
+            System.out.println("\n Parent Nodes: \n"); 
             parentNodeRec(root);
+      }
+
+      public int heightRec(Node root){
+        if(root == null){
+            return 0;
+        }
+
+        int leftHeight = heightRec(root.left);
+        int rightHeight = heightRec(root.right);
+
+        return Math.max(leftHeight, rightHeight) + 1;
+
+        
       }
     }
 
@@ -85,5 +98,8 @@ public class Binary {
         tree.inOrder();
 
         tree.parentNode();
+
+        int height = tree.heightRec(tree.root);
+        System.out.println("Height of tree: " + height);
     }
 }
