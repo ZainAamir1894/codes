@@ -70,13 +70,13 @@ public class Binary {
 
       public int heightRec(Node root){
         if(root == null){
-            return 0;
+            return 0; //returning a value since int return type
         }
 
         int leftHeight = heightRec(root.left);
         int rightHeight = heightRec(root.right);
 
-        return Math.max(leftHeight, rightHeight) + 1;
+        return Math.max(leftHeight, rightHeight) + 1; //Math.max returns the larger of two values
 
         
       }
