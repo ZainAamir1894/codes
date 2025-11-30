@@ -1,0 +1,89 @@
+public class Binary {
+
+    //Defining Roots, left and right
+    class Node {
+        int data;
+        Node left, right;
+
+        //Constructor to pass value to the node
+        public Node(int data) {
+            this.data = data;
+        }
+    }
+
+    //For the root
+    class BinaryTree {
+        Node root;
+
+        public void insert(int data) {
+            root = insertRec(root, data);
+        }
+
+    
+        public Node insertRec(Node root, int data) {
+            if (root == null) {                           
+                return new Node(data);                    
+            }
+            if (data < root.data) {                       //7 < 8
+                root.left = insertRec(root.left, data);   //insertRec(left, 7)
+
+
+            } else if (data > root.data) {                    //12 > 8
+                root.right = insertRec(root.right, data);     //insertRec(right, 12)
+            }
+            return root;
+        }
+
+        public void inOrder(){
+ 
+            inOrderRec(root);
+        }
+
+        public void inOrderRec(Node root){
+            if(root != null){
+                inOrderRec(root.left);
+                System.out.print(root.data + " ");
+                inOrderRec(root.right);
+            }
+
+        }
+        
+        public void parentNodeRec(Node root){
+
+            if(root == null){
+
+                return;
+            }
+            if(root.left != null || root.right != null){
+                System.out.print(root.data + " is parent node.");
+            }
+
+            parentNodeRec(root.left);
+            parentNodeRec(root.right);
+
+        }
+
+        public void parentNode(){
+            System.out.println("Parent Nodes: \n"); 
+            parentNodeRec(root);
+      }
+    }
+
+    public static void main(String[] args) {
+
+        Binary obj = new Binary();
+        BinaryTree tree = obj.new BinaryTree();
+
+        tree.insert(8);
+        tree.insert(7);
+        tree.insert(12);
+        tree.insert(15);
+        tree.insert(2);
+        tree.insert(5);
+
+        System.out.println("Tree built successfully!");
+        tree.inOrder();
+
+        tree.parentNode();
+    }
+}
