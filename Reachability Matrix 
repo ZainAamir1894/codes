@@ -1,0 +1,53 @@
+import java.util.*;
+
+public class ReachabilityMatrix {
+
+    static int V;
+    static int[][] graph;
+    static int[][] reach;
+
+    // DFS to mark reachability
+    public static void dfs(int start, int node) {
+        reach[start][node] = 1;
+
+        for (int i = 0; i < V; i++) {
+            if (graph[node][i] == 1 && reach[start][i] == 0) {
+                dfs(start, i);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of vertices: ");
+        V = sc.nextInt();
+
+        graph = new int[V][V];
+        reach = new int[V][V];
+
+        System.out.println("Enter adjacency matrix:");
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                graph[i][j] = sc.nextInt();
+            }
+        }
+
+        // Run DFS from each vertex
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                if (graph[i][j] == 1) {
+                    dfs(i, j);
+                }
+            }
+        }
+
+        System.out.println("\nReachability Matrix:");
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                System.out.print(reach[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
